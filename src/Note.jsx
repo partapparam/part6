@@ -9,6 +9,7 @@ const Note = (props) => {
     event.preventDefault()
     const content = event.target.note.value
     event.target.note.value = ""
+    console.log(content)
     dispatch(createNote(content))
   }
 

@@ -29,8 +29,9 @@ const generateId = () => {
 }
 
 export const createNote = (content) => {
+  console.log(content)
   return {
-    type: "NEW_NOTE",
+    type: "newNote",
     data: {
       content,
       important: false,
@@ -41,7 +42,7 @@ export const createNote = (content) => {
 
 export const toggleImportanceOf = (id) => {
   return {
-    type: "TOGGLE_IMPORTANCE",
+    type: "toggleImportant",
     data: { id },
   }
 }

@@ -5,9 +5,12 @@ import Note from "./Note"
 import { useDispatch, useSelector } from "react-redux"
 import { toggleImportanceOf } from "./reducers/noteReducers"
 
-function App({ store }) {
+function App() {
   const dispatch = useDispatch()
-  const notes = useSelector((state) => state)
+  const notes = useSelector((state) => {
+    console.log("here")
+    return state
+  })
   const toggleImportant = (id) => {
     dispatch(toggleImportanceOf(id))
   }
