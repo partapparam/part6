@@ -1,20 +1,23 @@
 import React from "react"
-import { createStore } from "redux"
+import { useDispatch, useSelector } from "react-redux"
+import { createNote, toggleImportanceOf } from "./reducers/noteReducers"
 
-const Note = () => {
-  const noteReducer = (state = [], action) => {
-    switch (action.type) {
-      case "newNote":
-        return state.concat(action.data)
+const Note = ({ store }) => {
+  const dispatch = useDispatch()
+  const notes = useSelector((state) => state)
 
-      default:
-        return state
-    }
+  const addNote = (event) => {
+    event.preventDefault()
+    const content = event.target.note.value
+    event.target.note.value = ""
+    dispatch(createNote(content))
   }
 
-  const noteStore = createStore(noteReducer)
+  const toggleImportant = (id) => {
+    dispatch(toggleImportanceOf(id))
+  }
 
-  noteStore.dispatch({
+  store.dispatch({
     type: "newNote",
     data: {
       content: "this is note",
@@ -23,7 +26,7 @@ const Note = () => {
     },
   })
 
-  noteStore.dispatch({
+  store.dispatch({
     type: "newNote",
     data: {
       content: "state changes are made with actions",
@@ -33,10 +36,14 @@ const Note = () => {
   })
 
   return (
-    <div>
+    <div className="App">
+      <form onSubmit={addNote}>
+        <input name="note" />
+        <button type="submit">add</button>
+      </form>
       <ul>
-        {noteStore.getState().map((note) => (
-          <li key={note.id}>
+        {notes.map((note) => (
+          <li key={note.id} onClick={() => toggleImportant(note.id)}>
             {note.content} <strong>{note.important ? "important" : ""}</strong>
           </li>
         ))}
