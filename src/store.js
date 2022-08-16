@@ -22,7 +22,6 @@ const reducer = {
 }
 
 export const store = configureStore({
-  reducer,
-  // preloadedState
+  reducer
 })
 

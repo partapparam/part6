@@ -6,19 +6,15 @@ describe("noteReducer", function () {
   test("returns new state with action", () => {
     const state = []
     const action = {
-      type: "newNote",
-      data: {
-        content: "new note",
-        important: true,
-        id: 1,
-      },
+      type: "notes/createNote",
+      payload: 'the app is redux'
     }
 
     deepFreeze(state)
     const newState = noteReducer(state, action)
 
     expect(newState).toHaveLength(1)
-    expect(newState).toContainEqual(action.data)
+    expect(newState.map(s => s.content)).toContainEqual(action.payload)
   })
 
   test("toggle importance", () => {
@@ -36,10 +32,8 @@ describe("noteReducer", function () {
     ]
 
     const action = {
-      type: "toggleImportant",
-      data: {
-        id: 2,
-      },
+      type: "notes/toggleImportanceOf",
+      payload: 2
     }
     deepFreeze(state)
     const newState = noteReducer(state, action)

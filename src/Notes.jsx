@@ -1,32 +1,45 @@
-import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { toggleImportanceOf } from './reducers/noteReducers'
+import React from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { toggleImportanceOf } from "./reducers/noteReducers"
 
 const Note = ({ note, handleClick }) => {
-  return(
+  return (
     <li onClick={handleClick}>
-      {note.content} 
-      <strong> {note.important ? 'important' : ''}</strong>
+      {note.content}
+      <strong> {note.important ? "important" : ""}</strong>
     </li>
   )
 }
 
 const Notes = () => {
   const dispatch = useDispatch()
-    const notes = useSelector(state => state.notes)
-    console.log(notes)
+  // const notes = useSelector((state) => {
+  //   if ((state.filter = "All")) {
+  //     return state.notes
+  //   }
 
-  return(
+  //   return state.filter === "important"
+  //     ? state.notes.filter((note) => note.important)
+  //     : state.notes.filter((note) => !note.important)
+  // })
+
+  const notes = useSelector(({ filter, notes }) => {
+    if (filter === "All") return notes
+    return filter === "important"
+      ? notes.filter((note) => note.important)
+      : notes.filter((note) => !note.important)
+  })
+  console.log(notes)
+
+  return (
     <ul>
-      {notes.map(note =>
+      {notes.map((note) => (
         <Note
           key={note.id}
           note={note}
-          handleClick={() => 
-            dispatch(toggleImportanceOf(note.id))
-          }
+          handleClick={() => dispatch(toggleImportanceOf(note.id))}
         />
-      )}
+      ))}
     </ul>
   )
 }
