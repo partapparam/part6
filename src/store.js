@@ -17,11 +17,10 @@ import noteReducer from "./reducers/noteReducers"
 // ]
 // }
 const reducer = {
-  notes: noteReducer,  
-  filter: filterReducer
+  notes: noteReducer,
+  filter: filterReducer,
 }
 
 export const store = configureStore({
-  reducer
+  reducer,
 })
-

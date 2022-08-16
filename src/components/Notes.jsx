@@ -1,12 +1,13 @@
 import React from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { toggleImportanceOf } from "./reducers/noteReducers"
+import { toggleImportanceOf } from "../reducers/noteReducers"
+import noteService from "../services/notes"
 
 const Note = ({ note, handleClick }) => {
   return (
     <li onClick={handleClick}>
       {note.content}
-      <strong> {note.important ? "important" : ""}</strong>
+      <strong> {note.important ? "important" : "Not important"}</strong>
     </li>
   )
 }
@@ -29,7 +30,17 @@ const Notes = () => {
       ? notes.filter((note) => note.important)
       : notes.filter((note) => !note.important)
   })
-  console.log(notes)
+  // console.log(notes)
+
+  const toggleImportant = async (id) => {
+    const note = notes.find((n) => n.id === id)
+    console.log(note)
+    const changedNote = { ...note, important: !note.important }
+    // console.log(changedNote)
+    const newNote = await noteService.updateNote(changedNote)
+    console.log(newNote)
+    dispatch(toggleImportanceOf(newNote))
+  }
 
   return (
     <ul>
@@ -37,7 +48,7 @@ const Notes = () => {
         <Note
           key={note.id}
           note={note}
-          handleClick={() => dispatch(toggleImportanceOf(note.id))}
+          handleClick={() => toggleImportant(note.id)}
         />
       ))}
     </ul>
