@@ -1,40 +1,24 @@
-import logo from "./logo.svg"
-import "./App.css"
-import React from "react"
-import Note from "./Note"
-import { useDispatch, useSelector } from "react-redux"
-import { toggleImportanceOf } from "./reducers/noteReducers"
+import React from 'react'
+import NewNote from './NewNote'
+import Notes from './Notes'
 
-function App() {
-  const dispatch = useDispatch()
-  const notes = useSelector((state) => {
-    console.log("here")
-    return state
-  })
-  const toggleImportant = (id) => {
-    dispatch(toggleImportanceOf(id))
+const App = () => {
+
+  const filterSelected = (name) => {
+    console.log(name)
   }
-  // store.subscribe(() => {
-  //   const stateNow = store.getState()
-  //   console.log("this is the state now", stateNow)
-  // })
 
-  // console.log(store.getState())
-  // store.dispatch({ type: "increment" })
-  // store.dispatch({ type: "increment" })
-  // store.dispatch({ type: "increment" })
-
-  // console.log(store.getState())
   return (
-    <div className="App">
-      <Note />
-      <ul>
-        {notes.map((note) => (
-          <li key={note.id} onClick={() => toggleImportant(note.id)}>
-            {note.content} <strong>{note.important ? "important" : ""}</strong>
-          </li>
-        ))}
-      </ul>
+    <div>
+      <NewNote />
+      <div>
+        All <input type="radio" name='filter' onChange={() => filterSelected('All')} />
+        Important <input type='radio' name='filter' onChange={() => filterSelected('important')}
+        />
+        Not Important <input type='radio' name='filter' onChange={() => filterSelected('not important')} />
+        {/* by giving them all the same name, only one of radio buttons can be selected from the Button Group */}
+      </div>
+      <Notes  />
     </div>
   )
 }
