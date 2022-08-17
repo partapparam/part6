@@ -14,15 +14,6 @@ const Note = ({ note, handleClick }) => {
 
 const Notes = () => {
   const dispatch = useDispatch()
-  // const notes = useSelector((state) => {
-  //   if ((state.filter = "All")) {
-  //     return state.notes
-  //   }
-
-  //   return state.filter === "important"
-  //     ? state.notes.filter((note) => note.important)
-  //     : state.notes.filter((note) => !note.important)
-  // })
 
   const notes = useSelector(({ filter, notes }) => {
     if (filter === "All") return notes
@@ -30,7 +21,6 @@ const Notes = () => {
       ? notes.filter((note) => note.important)
       : notes.filter((note) => !note.important)
   })
-  // console.log(notes)
 
   const toggleImportant = async (id) => {
     const note = notes.find((n) => n.id === id)
